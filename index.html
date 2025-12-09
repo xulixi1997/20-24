@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海南众邦网络科技有限公司 | 云计算与DevOps专家</title>
+    <meta name="description" content="海南众邦网络科技有限公司提供专业的云计算架构、DevOps实施、容器化改造及网络安全服务。">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B1120', // 深夜蓝背景
+                            light: '#1E293B', // 次级背景
+                            accent: '#06B6D4', // 科技青
+                            secondary: '#6366F1', // 靛蓝
+                            text: '#F1F5F9', // 主要文字
+                            muted: '#94A3B8' // 次要文字
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
+                        'circuit': "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%231e293b\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06B6D4;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #06B6D4 0%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-text font-sans antialiased overflow-x-hidden relative">
+
+    <!-- 1. Navigation Bar -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-cloud-bolt text-brand-accent text-3xl"></i>
+                    <div>
+                        <span class="font-bold text-xl tracking-wider block leading-none">HNZB</span>
+                        <span class="text-xs text-brand-muted tracking-widest">海南众邦科技</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">首页</a>
+                        <a href="#services" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">解决方案</a>
+                        <a href="#tech" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">技术栈</a>
+                        <a href="#process" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">合作流程</a>
+                        <a href="#about" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">关于我们</a>
+                        <a href="#contact" class="bg-brand-accent hover:bg-cyan-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-[0_0_15px_rgba(6,182,212,0.5)]">联系咨询</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div class="hidden md:hidden bg-brand-light border-t border-gray-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">首页</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">解决方案</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-brand-accent">联系我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center"></div>
+        <div class="absolute inset-0 bg-brand-dark/80 bg-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl mx-auto px-4" data-aos="fade-up" data-aos-duration="1000">
+            <div class="inline-block px-4 py-1 mb-6 border border-brand-accent/30 rounded-full bg-brand-accent/10 backdrop-blur-sm">
+                <span class="text-brand-accent text-sm font-mono tracking-widest">CLOUD NATIVE & DEVOPS EXPERTS</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                构建未来的<br>
+                <span class="gradient-text">数字基础设施</span>
+            </h1>
+            <p class="text-lg md:text-xl text-brand-muted mb-10 max-w-3xl mx-auto">
+                海南众邦网络科技有限公司致力于为企业提供企业级云计算解决方案。从基础设施即代码(IaC)到自动化CI/CD流水线，我们助您实现业务的敏捷交付与高可用性。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#services" class="px-8 py-4 bg-brand-accent hover:bg-cyan-600 rounded-lg font-bold text-white transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2">
+                    探索解决方案 <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="px-8 py-4 border border-gray-600 hover:border-brand-text rounded-lg font-bold text-brand-text hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-envelope"></i> 立即沟通
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-brand-muted">
+            <i class="fa-solid fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- 3. Tech Stack Marquee (Infinite Scroll) -->
+    <section class="py-10 bg-brand-light border-y border-gray-800 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 mb-4 text-center">
+            <p class="text-sm text-gray-500 font-mono uppercase tracking-widest">Trusted Technology Stack</p>
+        </div>
+        <div class="relative flex overflow-x-hidden group">
+            <div class="animate-marquee whitespace-nowrap flex gap-16 text-3xl text-gray-600 items-center opacity-50">
+                <i class="fab fa-aws hover:text-white transition-colors"></i>
+                <i class="fab fa-google hover:text-white transition-colors"></i>
+                <i class="fab fa-docker hover:text-white transition-colors"></i>
+                <i class="fa-brands fa-linux hover:text-white transition-colors"></i>
+                <i class="fab fa-jenkins hover:text-white transition-colors"></i>
+                <i class="fab fa-python hover:text-white transition-colors"></i>
+                <i class="fab fa-golang hover:text-white transition-colors"></i>
+                <i class="fab fa-react hover:text-white transition-colors"></i>
+                <i class="fab fa-node hover:text-white transition-colors"></i>
+                <i class="fab fa-rust hover:text-white transition-colors"></i>
+                <!-- Duplicated for loop -->
+                <i class="fab fa-aws hover:text-white transition-colors"></i>
+                <i class="fab fa-google hover:text-white transition-colors"></i>
+                <i class="fab fa-docker hover:text-white transition-colors"></i>
+                <i class="fa-brands fa-linux hover:text-white transition-colors"></i>
+                <i class="fab fa-jenkins hover:text-white transition-colors"></i>
+                <i class="fab fa-python hover:text-white transition-colors"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Introduction / Value Prop -->
+    <section id="about" class="py-20 relative bg-circuit">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-brand-accent font-mono text-sm mb-2">ABOUT HNZB TECH</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">让技术成为商业增长的<br>核心驱动力</h3>
+                    <p class="text-brand-muted mb-6 leading-relaxed">
+                        作为坐落于海南自贸港的高新技术企业，海南众邦网络科技专注于为中大型企业提供一站式的数字化转型服务。我们不只是代码的搬运工，更是您云端架构的规划师。
+                    </p>
+                    <p class="text-brand-muted mb-8 leading-relaxed">
+                        我们的团队由资深架构师和DevOps专家组成，拥有处理高并发、高可用系统的丰富经验。无论是传统的IDC上云，还是基于Kubernetes的微服务治理，我们都能提供最优解。
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <span class="bg-brand-secondary/20 p-2 rounded text-brand-secondary"><i class="fa-solid fa-check"></i></span>
+                            <span>99.99% 的系统可用性保障</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="bg-brand-secondary/20 p-2 rounded text-brand-secondary"><i class="fa-solid fa-check"></i></span>
+                            <span>全自动化 CI/CD 流程设计</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="bg-brand-secondary/20 p-2 rounded text-brand-secondary"><i class="fa-solid fa-check"></i></span>
+                            <span>7x24小时 智能化运维监控</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-accent to-brand-secondary opacity-30 blur-2xl rounded-xl"></div>
+                    <img src="https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Server Room" class="relative rounded-xl shadow-2xl border border-gray-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Core Services Grid (Split into detailed cards) -->
+    <section id="services" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">核心服务领域</h2>
+                <div class="w-20 h-1 bg-brand-accent mx-auto"></div>
+                <p class="mt-4 text-brand-muted">全栈式技术支持，覆盖开发到运维的每一个环节</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">云原生架构迁移</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        从传统单体架构向微服务架构转型。利用Docker和Kubernetes技术，实现应用的弹性伸缩与快速部署。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-code-branch text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">DevOps 体系建设</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        构建基于 Jenkins/GitLab CI 的自动化流水线。实现代码提交即测试、测试即部署的高效闭环。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-green-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved text-green-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">网络安全与合规</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        企业级防火墙策略、DDOS防御部署及数据加密存储方案，确保您的业务符合数据安全法规。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-red-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-server text-red-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">混合云管理</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        统一管理阿里云、AWS及本地IDC资源。通过统一控制台实现多云资源的调度与成本优化。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-database text-yellow-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">大数据运维</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        Hadoop/Spark 集群搭建与维护，实时日志分析系统（ELK Stack）部署，挖掘数据价值。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-14 h-14 bg-cyan-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-laptop-code text-cyan-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">定制化软件开发</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        基于现代Web技术栈（React/Vue + Node/Go）的企业级管理系统、API接口及SaaS平台开发。
+                    </p>
+                    <a href="#contact" class="text-brand-accent text-sm font-bold hover:underline">了解更多 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Statistics / Data Counters -->
+    <section class="py-16 bg-brand-secondary/10 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="zoom-in">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">50+</div>
+                <div class="text-brand-muted text-sm uppercase tracking-widest">企业客户</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="100">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">120+</div>
+                <div class="text-brand-muted text-sm uppercase tracking-widest">完成项目</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="200">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">99%</div>
+                <div class="text-brand-muted text-sm uppercase tracking-widest">客户满意度</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="300">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">24/7</div>
+                <div class="text-brand-muted text-sm uppercase tracking-widest">技术支持</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Features / Why Choose Us -->
+    <section class="py-20 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Data Analytics" class="rounded-xl shadow-2xl border border-gray-700">
+                </div>
+                <div class="md:w-1/2 flex flex-col justify-center" data-aos="fade-left">
+                    <h2 class="text-3xl font-bold mb-6">为什么选择海南众邦？</h2>
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-brand-accent text-white">
+                                    <i class="fa-solid fa-rocket"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg leading-6 font-medium text-white">快速交付</h4>
+                                <p class="mt-2 text-base text-brand-muted">
+                                    利用模块化开发与自动化部署，将项目交付周期缩短30%以上。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-brand-secondary text-white">
+                                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg leading-6 font-medium text-white">成本优化</h4>
+                                <p class="mt-2 text-base text-brand-muted">
+                                    精准的云资源评估与按需自动伸缩策略，为您节省不必要的IT开支。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-pink-600 text-white">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg leading-6 font-medium text-white">本地化服务</h4>
+                                <p class="mt-2 text-base text-brand-muted">
+                                    立足海口，辐射海南全省。提供即时的上门技术支持与面对面沟通。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Workflow Process -->
+    <section id="process" class="py-20 bg-brand-light relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold">标准作业流程</h2>
+                <p class="text-brand-muted mt-2">SOP标准化服务，确保项目可控</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-700 -z-10 transform -translate-y-1/2"></div>
+                
+                <!-- Step 1 -->
+                <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 text-center hover:border-brand-accent transition-colors" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4 border-4 border-brand-dark">1</div>
+                    <h4 class="font-bold mb-2">需求分析</h4>
+                    <p class="text-xs text-brand-muted">深度沟通，明确业务痛点与技术指标</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 text-center hover:border-brand-accent transition-colors" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4 border-4 border-brand-dark">2</div>
+                    <h4 class="font-bold mb-2">架构设计</h4>
+                    <p class="text-xs text-brand-muted">输出技术蓝图，选型评估与可行性验证</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 text-center hover:border-brand-accent transition-colors" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4 border-4 border-brand-dark">3</div>
+                    <h4 class="font-bold mb-2">敏捷开发</h4>
+                    <p class="text-xs text-brand-muted">Sprint迭代开发，定期演示与反馈</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 text-center hover:border-brand-accent transition-colors" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4 border-4 border-brand-dark">4</div>
+                    <h4 class="font-bold mb-2">自动化测试</h4>
+                    <p class="text-xs text-brand-muted">单元测试与压力测试，确保系统稳健</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 text-center hover:border-brand-accent transition-colors" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4 border-4 border-brand-dark">5</div>
+                    <h4 class="font-bold mb-2">交付运维</h4>
+                    <p class="text-xs text-brand-muted">部署上线，提供文档与持续维护</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Case Study Section -->
+    <section class="py-20 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-10 pl-4 border-l-4 border-brand-accent">精选案例</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Case 1 -->
+                <div class="group relative overflow-hidden rounded-xl h-64 md:h-80 cursor-pointer" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Case Study">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-brand-accent text-xs font-bold mb-1">电商零售</span>
+                        <h3 class="text-xl font-bold mb-2">某跨境电商平台高并发架构重构</h3>
+                        <p class="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">
+                            通过引入Kubernetes集群与Redis缓存层，成功应对双十一期间10倍流量峰值，响应速度提升45%。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Case 2 -->
+                <div class="group relative overflow-hidden rounded-xl h-64 md:h-80 cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Case Study">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-brand-accent text-xs font-bold mb-1">智慧园区</span>
+                        <h3 class="text-xl font-bold mb-2">琼捷双创基地物联网管理平台</h3>
+                        <p class="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">
+                            整合门禁、能耗及监控数据，打造可视化数字孪生大屏，实现园区运营成本降低20%。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Pricing Plans -->
+    <section class="py-20 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">服务方案</h2>
+            <p class="text-brand-muted mb-12">灵活的合作模式，满足不同阶段企业的需求</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic -->
+                <div class="bg-brand-dark p-8 rounded-2xl border border-gray-800 hover:border-gray-600 transition-all">
+                    <h3 class="text-xl font-bold text-white mb-2">基础咨询</h3>
+                    <div class="text-4xl font-bold text-brand-accent mb-6 font-mono">Starts at ¥</div>
+                    <ul class="text-left space-y-4 text-sm text-brand-muted mb-8">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 现有架构评估报告</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 上云迁移方案设计</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 基础安全漏洞扫描</li>
+                        <li class="opacity-50"><i class="fa-solid fa-times mr-2"></i> 7x24 运维支持</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 border border-brand-accent text-brand-accent rounded-lg font-bold hover:bg-brand-accent hover:text-white transition-colors">联系询价</a>
+                </div>
+
+                <!-- Pro (Featured) -->
+                <div class="bg-brand-dark p-8 rounded-2xl border-2 border-brand-accent relative transform scale-105 shadow-2xl">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-accent text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide">RECOMMENDED</div>
+                    <h3 class="text-xl font-bold text-white mb-2">企业协作</h3>
+                    <div class="text-4xl font-bold text-brand-accent mb-6 font-mono">Custom</div>
+                    <ul class="text-left space-y-4 text-sm text-brand-muted mb-8">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 定制化软件开发</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> CI/CD 流水线搭建</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 容器化集群部署</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 季度技术复盘</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 bg-brand-accent text-white rounded-lg font-bold hover:bg-cyan-600 transition-colors">定制方案</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-brand-dark p-8 rounded-2xl border border-gray-800 hover:border-gray-600 transition-all">
+                    <h3 class="text-xl font-bold text-white mb-2">深度代维</h3>
+                    <div class="text-4xl font-bold text-brand-accent mb-6 font-mono">Retainer</div>
+                    <ul class="text-left space-y-4 text-sm text-brand-muted mb-8">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 全托管运维服务</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 7x24小时 故障响应</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 数据库性能调优</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 专属技术经理</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-3 border border-brand-accent text-brand-accent rounded-lg font-bold hover:bg-brand-accent hover:text-white transition-colors">联系询价</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. FAQ Section -->
+    <section class="py-20 bg-brand-dark">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-10 text-center">常见问题</h2>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left bg-white/5 hover:bg-white/10 flex justify-between items-center focus:outline-none" onclick="toggleFAQ(this)">
+                        <span class="font-medium">你们能够处理多大规模的并发量？</span>
+                        <i class="fa-solid fa-plus transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 py-4 text-brand-muted bg-black/20 text-sm">
+                        我们的架构设计基于云原生理念，理论上支持无限水平扩展。实际上，我们曾成功支撑过单日百万级PV的电商促销活动，具体方案需根据您的业务场景定制。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left bg-white/5 hover:bg-white/10 flex justify-between items-center focus:outline-none" onclick="toggleFAQ(this)">
+                        <span class="font-medium">项目开发的周期通常是多久？</span>
+                        <i class="fa-solid fa-plus transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 py-4 text-brand-muted bg-black/20 text-sm">
+                        这取决于项目的复杂度。标准的企业展示型官网通常2周内交付，而复杂的SaaS管理系统可能需要2-3个月。我们在需求分析阶段会提供详细的项目甘特图。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left bg-white/5 hover:bg-white/10 flex justify-between items-center focus:outline-none" onclick="toggleFAQ(this)">
+                        <span class="font-medium">如果服务器出现故障，你们多久能响应？</span>
+                        <i class="fa-solid fa-plus transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 py-4 text-brand-muted bg-black/20 text-sm">
+                        对于签约代维客户，我们提供SLA服务承诺。严重故障（P0级）响应时间不超过15分钟，并由专门的On-Call工程师进行处理。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Blog / News -->
+    <section class="py-20 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-end mb-10">
+                <h2 class="text-3xl font-bold">行业洞察</h2>
+                <a href="#" class="text-brand-accent text-sm hover:underline">查看更多 <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Post 1 -->
+                <article class="bg-brand-dark rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs text-brand-accent mb-2 block">CLOUD COMPUTING</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-brand-accent cursor-pointer">Serverless架构在企业中的实践</h3>
+                        <p class="text-brand-muted text-sm line-clamp-2">探讨如何利用无服务器计算降低运营成本并提高开发效率...</p>
+                        <div class="mt-4 text-xs text-gray-500">2023-10-15</div>
+                    </div>
+                </article>
+                <!-- Post 2 -->
+                <article class="bg-brand-dark rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs text-brand-accent mb-2 block">DEVOPS</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-brand-accent cursor-pointer">Kubernetes 1.28 新特性解析</h3>
+                        <p class="text-brand-muted text-sm line-clamp-2">深入分析新版本K8s对于侧车容器的支持以及网络策略的改进...</p>
+                        <div class="mt-4 text-xs text-gray-500">2023-09-22</div>
+                    </div>
+                </article>
+                <!-- Post 3 -->
+                <article class="bg-brand-dark rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs text-brand-accent mb-2 block">SECURITY</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-brand-accent cursor-pointer">零信任网络架构入门指南</h3>
+                        <p class="text-brand-muted text-sm line-clamp-2">为什么传统的边界防御已经失效？如何构建以身份为核心的安全体系...</p>
+                        <div class="mt-4 text-xs text-gray-500">2023-08-10</div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. Call to Action -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary to-brand-accent opacity-20"></div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">准备好开启数字化转型之旅了吗？</h2>
+            <p class="text-xl text-brand-muted mb-8">立即预约免费的技术咨询，让我们为您量身定制解决方案。</p>
+            <a href="#contact" class="inline-block bg-white text-brand-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                开始合作
+            </a>
+        </div>
+    </section>
+
+    <!-- 14. Contact Section -->
+    <section id="contact" class="py-24 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl font-bold mb-8">联系我们</h2>
+                    <p class="text-brand-muted mb-10">无论您是有具体的技术难题，还是想探讨潜在的合作机会，我们都随时欢迎您的垂询。</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-brand-light p-3 rounded-lg text-brand-accent mr-4">
+                                <i class="fa-solid fa-location-dot text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">公司地址</h4>
+                                <p class="text-brand-muted text-sm mt-1">海南省海口市龙华区中山街道海秀东路1号<br>商业广场5楼琼捷双创基地506-A94</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-brand-light p-3 rounded-lg text-brand-accent mr-4">
+                                <i class="fa-solid fa-envelope text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">电子邮箱</h4>
+                                <p class="text-brand-muted text-sm mt-1">contact@hnzhongbangtech.asia</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-brand-light p-3 rounded-lg text-brand-accent mr-4">
+                                <i class="fa-solid fa-phone text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">联系电话</h4>
+                                <p class="text-brand-muted text-sm mt-1">+86 182 0352 7731</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Placeholder (Visual) -->
+                    <div class="mt-10 h-48 w-full bg-gray-800 rounded-xl overflow-hidden relative group">
+                        <!-- Normally an iframe google map here, using image for demo -->
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                             <span class="bg-black/70 px-4 py-2 rounded text-xs"><i class="fa-solid fa-map-pin mr-1"></i> 海口 · 琼捷双创基地</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-brand-light p-8 rounded-2xl border border-gray-700 shadow-2xl" data-aos="fade-left">
+                    <h3 class="text-xl font-bold mb-6">在线留言</h3>
+                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('感谢您的留言，我们会尽快联系您！');">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">姓名</label>
+                                <input type="text" class="w-full bg-brand-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder="您的姓名">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">电话</label>
+                                <input type="tel" class="w-full bg-brand-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder="联系电话">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">邮箱</label>
+                            <input type="email" class="w-full bg-brand-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder="name@company.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">需求类型</label>
+                            <select class="w-full bg-brand-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors">
+                                <option>云计算迁移</option>
+                                <option>DevOps 实施</option>
+                                <option>软件开发</option>
+                                <option>其他咨询</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">详细描述</label>
+                            <textarea rows="4" class="w-full bg-brand-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder="请简述您的项目需求..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-brand-accent to-brand-secondary text-white font-bold py-4 rounded-lg hover:shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all transform hover:-translate-y-1">
+                            提交信息
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. Footer -->
+    <footer class="bg-[#050911] pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-cloud-bolt text-brand-accent text-2xl"></i>
+                        <span class="font-bold text-xl tracking-wider">HNZB</span>
+                    </div>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">
+                        海南众邦网络科技有限公司致力于通过先进的云原生技术，赋能企业数字化转型，创造持久的商业价值。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa-brands fa-weixin text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">解决方案</h4>
+                    <ul class="space-y-2 text-sm text-brand-muted">
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">云架构设计</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">DevOps 咨询</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">容器化改造</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">自动化运维</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">公司</h4>
+                    <ul class="space-y-2 text-sm text-brand-muted">
+                        <li><a href="#about" class="hover:text-brand-accent transition-colors">关于我们</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">加入团队</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">新闻动态</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">隐私政策</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">订阅通讯</h4>
+                    <p class="text-xs text-brand-muted mb-4">获取最新的技术趋势与公司动态。</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Email" class="bg-gray-800 text-white px-3 py-2 rounded-l-md w-full text-sm focus:outline-none">
+                        <button class="bg-brand-accent px-4 py-2 rounded-r-md hover:bg-cyan-600 transition-colors"><i class="fa-solid fa-paper-plane text-sm"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-xs text-gray-500 mb-4 md:mb-0">
+                    &copy; 2023 海南众邦网络科技有限公司 All Rights Reserved.
+                </p>
+                <div class="text-xs text-gray-600 flex gap-4">
+                    <span>Server Status: <span class="text-green-500">● Normal</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init Animation Library
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(11, 17, 32, 0.9)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(30, 41, 59, 0.7)';
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // FAQ Toggle Logic
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+                button.classList.add('bg-white/10');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+                button.classList.remove('bg-white/10');
+            }
+        }
+    </script>
+</body>
+</html>
